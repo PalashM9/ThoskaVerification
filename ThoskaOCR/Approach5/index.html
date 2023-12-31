@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MLOM</title>
+  <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/fonts/css/all.css" />
+  <style>
+    :root {
+      font-size: 24px;
+      --background-color: #eeeeee;
+      --light-grey: #c4c1c1;
+      --accent-color: #263e9b;
+    }
+
+    body {
+      background: #1488cc;
+      /* fallback for old browsers */
+      background: linear-gradient(to left, #283593, #1976d2);
+      height: 100vh;
+      font-family: "Josefin Sans", sans-serif;
+    }
+
+    /* Background circle-rings start */
+    .circle-ring {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(#006db3, #29b6f6);
+    }
+
+    .circle-rings {
+      position: absolute;
+      height: 270px;
+      width: 450px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .circle-ring-1 {
+      height: 180px;
+      width: 180px;
+      top: -50px;
+      left: -108px;
+    }
+
+    .circle-ring-2 {
+      height: 200px;
+      width: 200px;
+      bottom: -90px;
+      right: -90px;
+      opacity: 0.8;
+    }
+
+    /* Background circle-rings end */
+
+    .card-group {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .card {
+      position: relative;
+      height: 270px;
+      width: 450px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(30px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+
+    .logo img,
+    .chip img,
+    .number,
+    .name,
+    .from,
+    .to,
+    .ring {
+      position: absolute;
+      /* All items inside card should have absolute position */
+    }
+
+    .label-bauhaus img {
+      top: 20px;
+      right: 19px;
+      width: 21px;
+      height: auto;
+      z-index: 9999;
+      opacity: 1;
+      position: absolute;
+    }
+
+    .thoska {
+      position: absolute;
+    }
+
+    .chip img {
+      top: 120px;
+      left: 40px;
+      width: 50px;
+      height: auto;
+      opacity: 0.8;
+    }
+
+    .number,
+    .name,
+    .from,
+    .to {
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+    }
+
+    .number {
+      left: 40px;
+      bottom: 65px;
+      font-family: "Nunito", sans-serif;
+    }
+
+    .name {
+      font-size: 0.5rem;
+      left: 40px;
+      bottom: 35px;
+    }
+
+    .from {
+      font-size: 0.5rem;
+      bottom: 35px;
+      right: 110px;
+    }
+
+    .to {
+      font-size: 0.5rem;
+      bottom: 35px;
+      right: 40px;
+    }
+
+    /* The two rings on the card background */
+    .ring {
+      height: 500px;
+      width: 500px;
+      border-radius: 50%;
+      background: transparent;
+      border: 50px solid rgba(255, 255, 255, 0.1);
+      bottom: 1%;
+      box-sizing: border-box;
+    }
+
+    .ring::after {
+      content: "";
+      position: absolute;
+      height: 600px;
+      width: 600px;
+      border-radius: 50%;
+      background: transparent;
+      border: 30px solid rgba(255, 255, 255, 0.1);
+      bottom: -80px;
+      right: -110px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 135px;
+      scale: 0.8;
+      margin-left: 35px;
+
+    }
+
+    .progress-container {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 60px;
+      max-width: 100%;
+      width: 350px;
+    }
+
+    .progress-container::before {
+      content: "";
+      background-color: var(--light-grey);
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      height: 4px;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .progress {
+      background-color: var(--accent-color);
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      height: 4px;
+      width: 0%;
+      z-index: -1;
+      transition: 0.4s ease;
+    }
+
+    .circle {
+      background: var(--light-grey);
+      color: var(--light-grey);
+      border-radius: 50%;
+      height: 10px;
+      width: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--light-grey);
+      transition: 0.4s ease;
+    }
+
+    .circle.active {
+      border-color: var(--accent-color);
+      background-color: #fff;
+      color: var(--accent-color);
+      scale: 1.1;
+    }
+
+    .step-container {
+      scale: 0.5;
+      margin-top: -94px;
+      color: wheat;
+      opacity: 0.7;
+      margin-left: -22px;
+    }
+
+    #steps {
+      width: 558px;
+    }
+
+    .circle .icon {
+      position: absolute;
+      font-size: 25px;
+      bottom: 25px;
+    }
+
+    .circle .caption {
+      position: absolute;
+      font-size: 14px;
+      font-weight: bolder;
+      bottom: -90px;
+      word-wrap: break;
+      width: min-content;
+      min-width: 60px;
+    }
+
+    .btn {
+      background: transparent;
+      color: #fff;
+      border: 0;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+      padding: 8px 30px;
+      margin-top: 88px;
+      margin-left: 105px;
+    }
+
+    .btn .fa-solid {
+      font-size: 45px;
+      opacity: 0.7;
+    }
+
+    .btn-prev {
+      margin-top: 58px;
+      margin-left: -12px;
+    }
+
+    .btn:active {
+      transform: scale(0.9);
+    }
+
+    .btn:focus {
+      outline: 0;
+    }
+
+    .btn:disabled {
+      background-color: var(--light-grey);
+      cursor: not-allowed;
+    }
+
+    @media only screen and (max-width: 400px) {
+      .container {
+        width: 85%;
+      }
+    }
+
+    .headline {
+      opacity: 0.4;
+      width: 800px;
+      height: 300px;
+      position: absolute;
+      top: 19%;
+      left: 68%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      font-family: "Titillium Web";
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .handling-div {
+      position: absolute;
+      margin-left: 60px;
+      margin-top: 40px;
+    }
+
+    .one {
+      opacity: 1;
+      color: #111;
+      font-size: 95px;
+      position: absolute;
+      top: -14px;
+      left: 595px;
+    }
+
+    .two {
+      opacity: 1;
+      color: #111;
+      font-size: 64px;
+      position: absolute;
+      top: 93px;
+      left: 597px;
+    }
+
+    .three {
+      opacity: 1;
+      color: antiquewhite;
+      font-size: 57px;
+      position: absolute;
+      top: 152px;
+      left: 598px;
+    }
+
+    .four {
+      opacity: 1;
+      color: antiquewhite;
+      font-size: 67px;
+      position: absolute;
+      top: 36px;
+      left: 57%;
+      transform: rotate(-90deg);
+    }
+    #text-recognition-error, #face-recognition-error, #progress-bar-container{
+      display : none;
+    }
+    .blink {
+      color: aliceblue;
+      transition: all 1s ease-out;
+      animation: blink-animation 2s steps(5, start) infinite;
+      -webkit-animation: blink-animation 2s steps(5, start) infinite;
+    }
+
+    @keyframes blink-animation {
+      to {
+        visibility: hidden;
+      }
+    }
+
+    @-webkit-keyframes blink-animation {
+      to {
+        visibility: hidden;
+      }
+    }
+
+    #progress-bar-container {
+      height: 10px;
+    margin: 14px;
+    width: 300px;
+    background-color: #d3d3d369;
+    border-radius: 20px;
+    }
+
+    #progress-bar {
+
+      opacity: 1;
+      background: linear-gradient(to left, #f2709c, #ff9472);
+      color: #fff;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 3px 3px -5px #f2709c, 0 2px 5px #f2709c;
+      transition: 1s ease;
+    }
+  </style>
+  <script src="/jquery.js"></script>
+  <script src="/main.js"></script>
+  <script src="../node_modules/tesseract.js/dist/tesseract.min.js"></script>
+</head>
+
+<body>
+  <div class="ring">
+    <div class="step-container my-5">
+      <section id="steps">
+        <div class="text-center mb-5">
+          <span>STEPS</span>
+          <h2 class="font-weight-bold display-4 ">How It <span style=" color: #263e9b">Works?</span></h2>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="bg-light position-relative px-3 my-5">
+              <div
+                class="font-weight-bold text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                style="width: 60px;height: 60px;top: -30px;border-width: 4px !important; background-color: #263e9b">
+                <h4>1st Step</h4>
+              </div>
+              <div class="px-3 text-center pb-3">
+
+                <p class="font-weight-light my-3">User faces camera & clicks on <i class="fa-solid fa-arrow-right"></i>
+                  icon to verify face.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="bg-light position-relative px-3 my-5">
+              <div
+                class="font-weight-bold text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                style="width: 60px;height: 60px;top: -30px;border-width: 4px !important; background-color: #263e9b">
+                <h4>2nd Step</h4>
+              </div>
+              <div class="px-3 text-center pb-3">
+
+                <p class="font-weight-light my-3">User verifies the image captured and places thoska on stand.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="bg-light position-relative px-3 my-5">
+              <div
+                class="font-weight-bold text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                style="width: 60px;height: 60px;top: -30px;border-width: 4px !important; background-color: #263e9b">
+                <h4>3rd Step</h4>
+              </div>
+              <div class="px-3 text-center pb-3">
+
+                <p class="font-weight-light my-3">User presses <i class="fa-solid fa-arrow-right"></i> icon to confirm
+                  proper placement of thoska and verification starts</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="circle-rings">
+    <div class="circle-ring circle-ring-1" id="prev">
+      <button class="btn btn-prev"><i class="fa-solid fa-arrow-left"></i></button>
+    </div>
+    <div class="circle-ring circle-ring-2" id="next">
+      <button class="btn"><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <div class="card-group">
+    <div class="card">
+
+      <div class="thoska"><img src="thoska_label.jpg" alt="chip"/></div>
+      <div class="handling-div">
+        <span id="face-recognition-error" class="blink"><i class="icon fa-solid fa-ghost"></i>&nbsp;Oops ! Face not
+          recognized !!</span>
+        <span id="text-recognition-error" class="blink"><i class="icon fa-solid fa-ghost"></i>&nbsp;Oops ! Thoska not
+            recognized !!</span>  
+        <div id="progress-bar-container">
+          <div id="progress-bar" class="blink" style="width: 0%; height: 100%; background-color: blue;"></div>
+        </div>
+      </div>
+      <div class="steps">
+
+        <div class="container">
+          <div class="progress-container">
+            <div class="progress" id="progress"></div>
+            <div class="circle active">
+              <i class="icon fa-solid fa-camera"></i>
+
+              <div class="caption">Stand in front of Camera</div>
+            </div>
+            <div class="circle">
+              <i class="icon fa-solid fa-image"></i>
+
+              <div class="caption">Satisfied with Image</div>
+            </div>
+            <div class="circle">
+              <i class="icon fa-solid fa-address-card"></i>
+
+              <div class="caption">Place Thoska in slot</div>
+            </div>
+            <div class="circle">
+              <i class="icon fa-solid fa-check"></i>
+
+              <div class="caption">Verified for Access Authentication</div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="label-bauhaus"><img src="bauhaus_label.jpg" alt="Visa"></div>
+
+    </div>
+  </div>
+  <div class="headline">
+    <h1 class="one">Face</h1>
+    <h2 class="two">Recognition</h2>
+    <h3 class="three">Verification</h3>
+    <h4 class="four">Thoska</h4>
+  </div>
+</body>
+<!-- <script>const progress = document.getElementById("progress");
+  const next = document.getElementById("next");
+  const prev = document.getElementById("prev");
+  const cricles = document.querySelectorAll(".circle");
+
+  let currentActive = 1;
+
+  next.addEventListener("click", () => {
+    if(currentActive != 3){
+      
+    
+    if (currentActive < cricles.length) {
+      currentActive++;
+    }
+    update();
+  }
+  });
+
+  prev.addEventListener("click", () => {
+  if (currentActive > 1) {
+      currentActive--;
+    }
+    update();
+  });
+
+
+  function update() {
+    cricles.forEach((circle, idx) => {
+      if (idx < currentActive) {
+        circle.classList.add("active");
+      } else {
+        circle.classList.remove("active");
+      }
+    });
+
+    progress.style.width =
+      ((currentActive - 1) / (cricles.length - 1)) * 100 + "%";
+
+    if (currentActive === 1) {
+      prev.disabled = true;
+    } else if (currentActive === cricles.length) {
+      next.disabled = true;
+    } else {
+      prev.disabled = false;
+      next.disabled = false;
+    }
+  }
+</script>
+ -->
+</html>
